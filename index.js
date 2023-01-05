@@ -12,7 +12,7 @@ const generateMemeBtn = document.querySelector(
   };
   
   const generateMeme = () => {
-    fetch("https://api.imgflip.com/ai_meme")
+    fetch("https://api.memegen.link/images/ds/small_file/high_quality.png")
       .then((response) => response.json())
       .then((data) => {
         updateDetails(data.url, data.title, data.author);
