@@ -8,17 +8,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-    <div class="meme-generator">
-        <button class="generate-meme-btn">Generate Meme</button>
-        <h2 class="meme-title">Loading...</h2>
-
-        <img src="" alt="">
-        <div class="meme-author"></div>
-        <button class="download-meme-btn">Download Meme</button>
+    <h1>Meme <i>Generator</i></h1>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <div class="sidebar">
+            <p>Add Image</p>
+            <input type="file" id="file">
+            <div class="group">
+                <textarea placeholder="Type something" id="text"></textarea>
+                <input type="color" id="color">
+                <button id="addText">Add Text</button>
+            </div>
+            <button id="save">Save</button>
+        </div>
     </div>
-   
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js" integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="index.js"></script>
 </body>
 </html>

@@ -1,24 +1,57 @@
-const generateMemeBtn = document.querySelector(
-    ".meme-generator .generate-meme-btn"
-  );
-  const memeImage = document.querySelector(".meme-generator img");
-  const memeTitle = document.querySelector(".meme-generator .meme-title");
-  const memeAuthor = document.querySelector(".meme-generator .meme-author");
-  
-  const updateDetails = (url, title, author) => {
-    memeImage.setAttribute("src", url);
-    memeTitle.innerHTML = title;
-    memeAuthor.innerHTML = `Meme by: ${author}`;
-  };
-  
-  const generateMeme = () => {
-    fetch("https://api.memegen.link/images/ds/small_file/high_quality.png")
-      .then((response) => response.json())
-      .then((data) => {
-        updateDetails(data.url, data.title, data.author);
-      });
-  };
-  
-  generateMemeBtn.addEventListener("click", generateMeme);
-  
-  generateMeme();
+const canvas = new fabric.Canvas('canvas', {
+  width: 500,
+  height: 500,
+  backgroundColor: '#fff'
+})
+
+let file = document.getElementById('file')
+
+file.addEventListener('change', function(){
+  let img = file.files[0]
+  if(!img){
+      return
+  }
+  let reader = new FileReader()
+
+  reader.onload = function(e){
+      let data = reader.result
+      fabric.Image.fromURL(data, function(img){
+          canvas.add(img)
+          if(img.width > canvas.width){
+              img.scaleToWidth(canvas.width)
+          }
+      })
+      console.log(data)
+  }
+
+  reader.readAsDataURL(img)
+})
+
+let addTextBtn = document.getElementById('addText')
+let text = document.getElementById('text')
+let color = document.getElementById('color')
+
+addTextBtn.addEventListener('click', function(){
+  let _text = new fabric.Text(text.value, {
+      left: 100,
+      top: 100,
+      fontSize: 20,
+      fill: color.value
+  })
+  canvas.add(_text)
+})
+
+window.addEventListener('keydown', function(e){
+  if(e.key == "Delete"){
+      canvas.remove(canvas.getActiveObject())
+  }
+})
+
+let saveBtn = document.getElementById('save')
+saveBtn.addEventListener('click', function(){
+  let data = canvas.toDataURL()
+  let link = document.createElement('a')
+  link.href = data
+  link.download = 'image.png'
+  link.click()
+})
